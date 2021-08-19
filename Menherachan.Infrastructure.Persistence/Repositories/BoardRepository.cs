@@ -19,30 +19,33 @@ namespace Menherachan.Infrastructure.Persistence.Repositories
             _boards = context.Boards;
         }
 
-        public async Task<IList<Board>> GetData()
+        public async Task<IEnumerable<Board>> GetData()
         {
             return await _boards
+                .AsNoTracking()
                 .ToListAsync();
         }
 
-        public async Task<IList<Board>> GetDataWithCondition(Expression<Func<Board, bool>> condition)
+        public async Task<IEnumerable<Board>> GetDataWithCondition(Expression<Func<Board, bool>> condition)
         {
             return await _boards
                 .Where(condition)
+                .AsNoTracking()
                 .ToListAsync();
         }
 
-        public async Task<IList<Board>> GetDataWithIncluded()
+        public async Task<IEnumerable<Board>> GetDataWithIncluded()
         {
             return await _boards
                 .Include(b => b.File)
                 .Include(b => b.Post)
                 .Include(b => b.Report)
                 .Include(b => b.Thread)
+                .AsNoTracking()
                 .ToListAsync();
         }
 
-        public async Task<IList<Board>> GetDataWithConditionAndIncluded(Expression<Func<Board, bool>> condition)
+        public async Task<IEnumerable<Board>> GetDataWithConditionAndIncluded(Expression<Func<Board, bool>> condition)
         {
             return await _boards
                 .Where(condition)
@@ -50,51 +53,8 @@ namespace Menherachan.Infrastructure.Persistence.Repositories
                 .Include(b => b.Post)
                 .Include(b => b.Report)
                 .Include(b => b.Thread)
+                .AsNoTracking()
                 .ToListAsync();
-        }
-
-        public async Task<IList<Board>> GetDataWithIncluded(string[] includes)
-        {
-            IQueryable<Board> query = _boards;
-
-            query = GetIncludes(query, includes);
-
-            return await query.Select(b => b).ToListAsync();
-        }
-
-        public async Task<IList<Board>> GetDataWithConditionAndIncluded(Expression<Func<Board, bool>> condition, string[] includes)
-        {
-            IQueryable<Board> query = _boards.Where(condition);
-
-            query = GetIncludes(query, includes);
-            
-            return await query.ToListAsync();
-        }
-
-        private IQueryable<Board> GetIncludes(IQueryable<Board> query, string[] includes)
-        {
-            foreach (var include in includes)
-            {
-                switch (include)
-                {
-                    case "file":
-                        query.Include(b => b.File);
-                        break;
-                    case "post":
-                        query.Include(b => b.Post);
-                        break;
-                    case "thread":
-                        query.Include(b => b.Thread);
-                        break;
-                    case "report":
-                        query.Include(b => b.Report);
-                        break;
-                    default:
-                        throw new ArgumentException();
-                }
-            }
-            
-            return query;
         }
     }
 }

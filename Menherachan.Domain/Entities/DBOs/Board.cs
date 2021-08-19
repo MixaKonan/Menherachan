@@ -1,8 +1,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Menherachan.Domain.Entities.DBOs;
-using Thread = Menherachan.Domain.Entities.DBOs.Thread;
 
 namespace Menherachan.Domain.Entities.DBOs
 {    [Table("board")]

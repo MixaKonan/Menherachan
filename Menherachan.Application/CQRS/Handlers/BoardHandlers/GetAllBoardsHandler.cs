@@ -4,11 +4,12 @@ using System.Threading.Tasks;
 using MediatR;
 using Menherachan.Application.CQRS.Queries.BoardQueries;
 using Menherachan.Application.Interfaces;
-using Menherachan.Domain.Entities.DBOs;
+using Menherachan.Domain.Entities.Responses;
+using Menherachan.Domain.Entities.ViewModels;
 
 namespace Menherachan.Application.CQRS.Handlers.BoardHandlers
 {
-    public class GetAllBoardsHandler : IRequestHandler<GetAllBoardsQuery, IList<Board>>
+    public class GetAllBoardsHandler : IRequestHandler<GetNavMenuBoardsQuery, Response<IEnumerable<NavMenuBoardViewModel>>>
     {
         private IBoardRepository _boardRepository;
 
@@ -17,9 +18,22 @@ namespace Menherachan.Application.CQRS.Handlers.BoardHandlers
             _boardRepository = boardRepository;
         }
 
-        public async Task<IList<Board>> Handle(GetAllBoardsQuery request, CancellationToken cancellationToken)
+        public async Task<Response<IEnumerable<NavMenuBoardViewModel>>> Handle(GetNavMenuBoardsQuery request, CancellationToken cancellationToken)
         {
-            return await _boardRepository.GetDataWithIncluded();
+            var boards = await _boardRepository.GetData();
+
+            var data = new List<NavMenuBoardViewModel>();
+
+            foreach (var board in boards)
+            {
+                data.Add(new NavMenuBoardViewModel(
+                    board.Prefix,
+                    board.Postfix));
+            }
+            
+            var response = new Response<IEnumerable<NavMenuBoardViewModel>>(data);
+
+            return response;
         }
     }
 }

@@ -16,17 +16,18 @@ namespace Menherachan.WebAPI.Controllers.v1
             _mediator = mediator;
         }
 
-        [HttpGet("all")]
-        public async Task<IActionResult> GetAllBoards()
+        [HttpGet("nav-menu")]
+        public async Task<IActionResult> GetNavMenuBoards()
         {
-            var query = new GetAllBoardsQuery();
+            var query = new GetNavMenuBoardsQuery();
             var result = await _mediator.Send(query);
             return Ok(result);
         }
         
-        [HttpGet("all/including")]
-        public async Task<IActionResult> GetAllBoards([FromQuery] GetAllBoardsWithIncludesQuery query)
+        [HttpGet("short-info")]
+        public async Task<IActionResult> GetBoardsShortInfo()
         {
+            var query = new GetBoardsShortInfoQuery();
             var result = await _mediator.Send(query);
             return Ok(result);
         }

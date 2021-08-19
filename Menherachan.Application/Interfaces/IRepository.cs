@@ -7,15 +7,12 @@ namespace Menherachan.Application.Interfaces
 {
     public interface IRepository<T>
     {
-        public Task<IList<T>> GetData();
+        public Task<IEnumerable<T>> GetData();
         
-        public Task<IList<T>> GetDataWithCondition(Expression<Func<T, bool>> condition);
+        public Task<IEnumerable<T>> GetDataWithCondition(Expression<Func<T, bool>> condition);
         
-        public Task<IList<T>> GetDataWithIncluded();
+        public Task<IEnumerable<T>> GetDataWithIncluded();
         
-        public Task<IList<T>> GetDataWithConditionAndIncluded(Expression<Func<T, bool>> condition);
-
-        public Task<IList<T>> GetDataWithIncluded(string[] includes);
-        public Task<IList<T>> GetDataWithConditionAndIncluded(Expression<Func<T, bool>> condition, string[] includes);
+        public Task<IEnumerable<T>> GetDataWithConditionAndIncluded(Expression<Func<T, bool>> condition);
     }
 }

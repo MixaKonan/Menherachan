@@ -1,12 +1,9 @@
 using System;
-using System.Collections.Generic;
 using System.Reflection;
 using MediatR;
-using Menherachan.Application.CQRS.Handlers.BoardHandlers;
 using Menherachan.Application.CQRS.Queries.BoardQueries;
 using Menherachan.Application.Interfaces;
 using Menherachan.Domain.Database;
-using Menherachan.Domain.Entities.DBOs;
 using Menherachan.Infrastructure.Persistence.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -32,7 +29,7 @@ namespace Menherachan.WebAPI
             services.AddControllers()
                 .AddNewtonsoftJson(options =>
                     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
-            
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo
@@ -42,15 +39,14 @@ namespace Menherachan.WebAPI
                 });
             });
 
-            
-            services.AddDbContext<ApplicationDbContext>(options => options.UseMySql(
-                Configuration.GetConnectionString("DefaultConnection"),
-                new MariaDbServerVersion(new Version(10, 3, 27))));
 
-            services.AddMediatR(typeof(GetAllBoardsQuery).GetTypeInfo().Assembly);
+            services.AddDbContext<ApplicationDbContext>
+            (options => options.UseMySql(Configuration.GetConnectionString("DefaultConnection"), new MariaDbServerVersion(new Version(10, 3, 27)),
+                opt => opt.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery)));
+
+            services.AddMediatR(typeof(GetNavMenuBoardsQuery).GetTypeInfo().Assembly);
 
             services.AddTransient<IBoardRepository, BoardRepository>();
-            
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -68,10 +64,7 @@ namespace Menherachan.WebAPI
 
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }
     }
 }
