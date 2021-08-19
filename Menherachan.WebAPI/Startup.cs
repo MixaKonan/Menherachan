@@ -1,15 +1,19 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Reflection;
+using MediatR;
+using Menherachan.Application.CQRS.Handlers.BoardHandlers;
+using Menherachan.Application.CQRS.Queries.BoardQueries;
+using Menherachan.Application.Interfaces;
+using Menherachan.Domain.Database;
+using Menherachan.Domain.Entities.DBOs;
+using Menherachan.Infrastructure.Persistence.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 
 namespace Menherachan.WebAPI
@@ -23,18 +27,32 @@ namespace Menherachan.WebAPI
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
-            services.AddControllers();
+            services.AddControllers()
+                .AddNewtonsoftJson(options =>
+                    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+            
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Menherachan.WebAPI", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "Menherachan.WebAPI",
+                    Version = "v1"
+                });
             });
+
+            
+            services.AddDbContext<ApplicationDbContext>(options => options.UseMySql(
+                Configuration.GetConnectionString("DefaultConnection"),
+                new MariaDbServerVersion(new Version(10, 3, 27))));
+
+            services.AddMediatR(typeof(GetAllBoardsQuery).GetTypeInfo().Assembly);
+
+            services.AddTransient<IBoardRepository, BoardRepository>();
+            
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())

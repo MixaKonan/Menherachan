@@ -2,7 +2,19 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Menherachan.WebAPI", "Menherachan.WebAPI\Menherachan.WebAPI.csproj", "{7721C692-9C90-4FFD-A33F-ECBC7C7640AA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Menherachan.Core", "Menherachan.Core\Menherachan.Core.csproj", "{A69FF473-9AA5-4EA0-98A5-39AC66FD79D3}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "API", "API", "{A9768F99-C24D-4E19-9CE7-A545D02FB255}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{6528ED9D-CE28-46AC-B223-55C09DBC8E26}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{10E0F25D-F35A-44E1-ADFB-C4EE151DC2FC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Menherachan.Application", "Menherachan.Application\Menherachan.Application.csproj", "{CECC755A-9A65-489E-B809-3E6D0C312E27}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Menherachan.Domain", "Menherachan.Domain\Menherachan.Domain.csproj", "{C0E89601-87FF-420D-A674-0A50E076707D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Menherachan.Infrastructure.Persistence", "Menherachan.Infrastructure.Persistence\Menherachan.Infrastructure.Persistence.csproj", "{07AEF8F4-3BAC-4C18-8CE6-0C900B34C3E9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Menherachan.Infrastructure.Shared", "Menherachan.Infrastructure.Shared\Menherachan.Infrastructure.Shared.csproj", "{50DED253-2230-4B18-B70A-24BD9584CD5C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -14,9 +26,28 @@ Global
 		{7721C692-9C90-4FFD-A33F-ECBC7C7640AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7721C692-9C90-4FFD-A33F-ECBC7C7640AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7721C692-9C90-4FFD-A33F-ECBC7C7640AA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A69FF473-9AA5-4EA0-98A5-39AC66FD79D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A69FF473-9AA5-4EA0-98A5-39AC66FD79D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A69FF473-9AA5-4EA0-98A5-39AC66FD79D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A69FF473-9AA5-4EA0-98A5-39AC66FD79D3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CECC755A-9A65-489E-B809-3E6D0C312E27}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CECC755A-9A65-489E-B809-3E6D0C312E27}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CECC755A-9A65-489E-B809-3E6D0C312E27}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CECC755A-9A65-489E-B809-3E6D0C312E27}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C0E89601-87FF-420D-A674-0A50E076707D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0E89601-87FF-420D-A674-0A50E076707D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0E89601-87FF-420D-A674-0A50E076707D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0E89601-87FF-420D-A674-0A50E076707D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07AEF8F4-3BAC-4C18-8CE6-0C900B34C3E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07AEF8F4-3BAC-4C18-8CE6-0C900B34C3E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07AEF8F4-3BAC-4C18-8CE6-0C900B34C3E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07AEF8F4-3BAC-4C18-8CE6-0C900B34C3E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50DED253-2230-4B18-B70A-24BD9584CD5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50DED253-2230-4B18-B70A-24BD9584CD5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50DED253-2230-4B18-B70A-24BD9584CD5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50DED253-2230-4B18-B70A-24BD9584CD5C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{7721C692-9C90-4FFD-A33F-ECBC7C7640AA} = {A9768F99-C24D-4E19-9CE7-A545D02FB255}
+		{CECC755A-9A65-489E-B809-3E6D0C312E27} = {6528ED9D-CE28-46AC-B223-55C09DBC8E26}
+		{C0E89601-87FF-420D-A674-0A50E076707D} = {6528ED9D-CE28-46AC-B223-55C09DBC8E26}
+		{07AEF8F4-3BAC-4C18-8CE6-0C900B34C3E9} = {10E0F25D-F35A-44E1-ADFB-C4EE151DC2FC}
+		{50DED253-2230-4B18-B70A-24BD9584CD5C} = {10E0F25D-F35A-44E1-ADFB-C4EE151DC2FC}
 	EndGlobalSection
 EndGlobal
