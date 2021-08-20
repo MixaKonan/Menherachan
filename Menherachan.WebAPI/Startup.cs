@@ -39,6 +39,12 @@ namespace Menherachan.WebAPI
                 });
             });
 
+            services.AddCors(o => o.AddPolicy("Policy", builder =>
+            {
+                builder.AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .AllowAnyOrigin();
+            }));
 
             services.AddDbContext<ApplicationDbContext>
             (options => options.UseMySql(Configuration.GetConnectionString("DefaultConnection"), new MariaDbServerVersion(new Version(10, 3, 27)),
@@ -51,6 +57,8 @@ namespace Menherachan.WebAPI
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseCors("Policy");
+            
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
