@@ -1,7 +1,7 @@
 using System;
 using System.Reflection;
 using MediatR;
-using Menherachan.Application.CQRS.Queries.BoardQueries;
+using Menherachan.Application;
 using Menherachan.Application.Interfaces;
 using Menherachan.Domain.Database;
 using Menherachan.Infrastructure.Persistence.Repositories;
@@ -50,7 +50,7 @@ namespace Menherachan.WebAPI
             (options => options.UseMySql(Configuration.GetConnectionString("DefaultConnection"), new MariaDbServerVersion(new Version(10, 3, 27)),
                 opt => opt.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery)));
 
-            services.AddMediatR(typeof(GetNavMenuBoardsQuery).GetTypeInfo().Assembly);
+            services.AddMediatR(typeof(MediatREntryPoint).GetTypeInfo().Assembly);
 
             services.AddTransient<IBoardRepository, BoardRepository>();
         }
