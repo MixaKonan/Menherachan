@@ -20,7 +20,7 @@ namespace Menherachan.Application.CQRS.Handlers.BoardHandlers
 
         public async Task<Response<IEnumerable<MainPageBoardInfoViewModel>>> Handle(GetBoardsShortInfoQuery request, CancellationToken cancellationToken)
         {
-            var result = await _boardRepository.GetDataWithIncluded();
+            var result = await _boardRepository.GetDataWithConditionAndIncluded(b => !b.IsHidden);
 
             var data = new List<MainPageBoardInfoViewModel>();
 

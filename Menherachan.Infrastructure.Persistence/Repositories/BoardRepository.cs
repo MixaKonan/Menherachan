@@ -45,7 +45,7 @@ namespace Menherachan.Infrastructure.Persistence.Repositories
                 return new Board();
             }
         }
-        
+
         public async Task<Board> GetBoard(Expression<Func<Board, bool>> condition)
         {
             try

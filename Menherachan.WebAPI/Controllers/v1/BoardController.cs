@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using MediatR;
 using Menherachan.Application.CQRS.Queries.BoardQueries;
+using Menherachan.Domain.Entities.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Menherachan.WebAPI.Controllers.v1

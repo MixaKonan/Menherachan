@@ -9,18 +9,18 @@ using Menherachan.Domain.Entities.ViewModels;
 
 namespace Menherachan.Application.CQRS.Handlers.BoardHandlers
 {
-    public class GetAllBoardsHandler : IRequestHandler<GetNavMenuBoardsQuery, Response<IEnumerable<NavMenuBoardViewModel>>>
+    public class GetNavMenuHandler : IRequestHandler<GetNavMenuBoardsQuery, Response<IEnumerable<NavMenuBoardViewModel>>>
     {
         private IBoardRepository _boardRepository;
 
-        public GetAllBoardsHandler(IBoardRepository boardRepository)
+        public GetNavMenuHandler(IBoardRepository boardRepository)
         {
             _boardRepository = boardRepository;
         }
 
         public async Task<Response<IEnumerable<NavMenuBoardViewModel>>> Handle(GetNavMenuBoardsQuery request, CancellationToken cancellationToken)
         {
-            var boards = await _boardRepository.GetData();
+            var boards = await _boardRepository.GetDataWithCondition(b => !b.IsHidden);
 
             var data = new List<NavMenuBoardViewModel>();
 
