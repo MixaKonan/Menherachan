@@ -34,6 +34,30 @@ namespace Menherachan.Infrastructure.Persistence.Repositories
                 .ToListAsync();
         }
 
+        public async Task<Board> GetBoard(string prefix)
+        {
+            try
+            {
+                return await _boards.FirstAsync(board => board.Prefix == prefix);
+            }
+            catch (InvalidOperationException)
+            {
+                return new Board();
+            }
+        }
+        
+        public async Task<Board> GetBoard(Expression<Func<Board, bool>> condition)
+        {
+            try
+            {
+                return await _boards.FirstAsync(condition);
+            }
+            catch (InvalidOperationException)
+            {
+                return new Board();
+            }
+        }
+
         public async Task<IEnumerable<Board>> GetDataWithIncluded()
         {
             return await _boards

@@ -31,5 +31,12 @@ namespace Menherachan.WebAPI.Controllers.v1
             var result = await _mediator.Send(query);
             return Ok(result);
         }
+
+        [HttpGet("header")]
+        public async Task<IActionResult> GetBoard([FromQuery] GetBoardHeaderQuery headerQuery)
+        {
+            var result = await _mediator.Send(headerQuery);
+            return Ok(result);
+        }
     }
 }
