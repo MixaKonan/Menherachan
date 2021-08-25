@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Menherachan.Application.CQRS.Queries.BoardQueries;
 using Menherachan.Application.Interfaces;
+using Menherachan.Domain.Entities.DBOs;
 using Menherachan.Domain.Entities.Responses;
 using Menherachan.Domain.Entities.ViewModels;
 
@@ -21,12 +22,22 @@ namespace Menherachan.Application.CQRS.Handlers.BoardHandlers
         {
             if (request.IsMainPage)
             {
-                var result = new BoardHeaderViewModel("bash", "org", "Menherachan", "Добро пожаловать", "На сосач");
+                var result = new BoardHeaderViewModel(
+                    "bash",
+                    "org",
+                    "Menherachan",
+                    "Добро пожаловать",
+                    "На сосач");
 
                 return new Response<BoardHeaderViewModel>(result);
             }
             
             var board = await _boardRepository.GetBoard(request.Prefix);
+
+            if (IsBad(board))
+            {
+                return new Response<BoardHeaderViewModel>("No board found");
+            }
 
             var viewModel = new BoardHeaderViewModel(
                 board.Prefix,
@@ -34,8 +45,16 @@ namespace Menherachan.Application.CQRS.Handlers.BoardHandlers
                 board.Title,
                 board.Description,
                 "На башорг!");
-
+            
             return new Response<BoardHeaderViewModel>(viewModel);
+        }
+
+        private bool IsBad(Board board)
+        {
+            return
+                string.IsNullOrEmpty(board.Prefix) || string.IsNullOrWhiteSpace(board.Prefix)
+                &&
+                string.IsNullOrEmpty(board.Postfix) || string.IsNullOrWhiteSpace(board.Postfix);
         }
     }
 }
