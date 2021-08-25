@@ -1,7 +1,6 @@
 using System.Threading.Tasks;
 using MediatR;
 using Menherachan.Application.CQRS.Queries.BoardQueries;
-using Menherachan.Domain.Entities.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Menherachan.WebAPI.Controllers.v1
@@ -37,6 +36,13 @@ namespace Menherachan.WebAPI.Controllers.v1
         public async Task<IActionResult> GetBoard([FromQuery] GetBoardHeaderQuery headerQuery)
         {
             var result = await _mediator.Send(headerQuery);
+            return Ok(result);
+        }
+
+        [HttpGet("preview")]
+        public async Task<IActionResult> GetPreview([FromQuery] GetThreadsPreviewsQuery query)
+        {
+            var result = await _mediator.Send(query);
             return Ok(result);
         }
     }

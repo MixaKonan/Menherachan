@@ -53,6 +53,7 @@ namespace Menherachan.WebAPI
             services.AddMediatR(typeof(MediatREntryPoint).GetTypeInfo().Assembly);
 
             services.AddTransient<IBoardRepository, BoardRepository>();
+            services.AddTransient<IThreadRepository, ThreadRepository>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
