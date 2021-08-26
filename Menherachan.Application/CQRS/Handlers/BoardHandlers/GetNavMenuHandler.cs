@@ -6,6 +6,7 @@ using Menherachan.Application.CQRS.Queries.BoardQueries;
 using Menherachan.Application.Interfaces;
 using Menherachan.Domain.Entities.Responses;
 using Menherachan.Domain.Entities.ViewModels;
+using Menherachan.Domain.Entities.ViewModels.Common;
 
 namespace Menherachan.Application.CQRS.Handlers.BoardHandlers
 {

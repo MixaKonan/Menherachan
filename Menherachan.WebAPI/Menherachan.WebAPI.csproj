@@ -5,6 +5,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
         <PackageReference Include="MediatR" Version="9.0.0" />
         <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
         <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="5.0.9" />
@@ -16,6 +17,7 @@
       <ProjectReference Include="..\Menherachan.Application\Menherachan.Application.csproj" />
       <ProjectReference Include="..\Menherachan.Domain\Menherachan.Domain.csproj" />
       <ProjectReference Include="..\Menherachan.Infrastructure.Persistence\Menherachan.Infrastructure.Persistence.csproj" />
+      <ProjectReference Include="..\Menherachan.Infrastructure.Shared\Menherachan.Infrastructure.Shared.csproj" />
     </ItemGroup>
 
 </Project>

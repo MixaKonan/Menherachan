@@ -5,6 +5,7 @@ using Menherachan.Application;
 using Menherachan.Application.Interfaces;
 using Menherachan.Domain.Database;
 using Menherachan.Infrastructure.Persistence.Repositories;
+using Menherachan.Infrastructure.Shared.Mapping;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -52,6 +53,8 @@ namespace Menherachan.WebAPI
 
             services.AddMediatR(typeof(MediatREntryPoint).GetTypeInfo().Assembly);
 
+            services.AddAutoMapper(m => m.AddProfile(new GeneralProfile()));
+            
             services.AddTransient<IBoardRepository, BoardRepository>();
             services.AddTransient<IThreadRepository, ThreadRepository>();
         }

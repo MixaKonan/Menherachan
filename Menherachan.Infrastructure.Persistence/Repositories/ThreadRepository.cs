@@ -52,7 +52,8 @@ namespace Menherachan.Infrastructure.Persistence.Repositories
                 .Include(t => t.Board)
                 .Include(t => t.Post)
                 .ThenInclude(p => p.Admin)
-                .Include(t => t.File)
+                .Include(t => t.Post)
+                .ThenInclude(p => p.File)
                 .Include(t => t.Report)
                 .AsNoTracking()
                 .ToListAsync();

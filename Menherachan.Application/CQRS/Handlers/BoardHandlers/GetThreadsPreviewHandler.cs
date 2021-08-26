@@ -2,25 +2,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper;
 using MediatR;
 using Menherachan.Application.CQRS.Queries.BoardQueries;
 using Menherachan.Application.Interfaces;
-using Menherachan.Domain.Entities.DBOs;
 using Menherachan.Domain.Entities.Responses;
+using Menherachan.Domain.Entities.ViewModels.Common;
 using Thread = Menherachan.Domain.Entities.DBOs.Thread;
 
 namespace Menherachan.Application.CQRS.Handlers.BoardHandlers
 {
-    public class GetThreadsPreviewHandler : IRequestHandler<GetThreadsPreviewsQuery, Response<IEnumerable<Post>>>
+    public class GetThreadsPreviewHandler : IRequestHandler<GetThreadsPreviewsQuery, Response<IEnumerable<PostViewModel>>>
     {
         private IThreadRepository _threadRepository;
+        private IMapper _mapper;
 
-        public GetThreadsPreviewHandler(IThreadRepository threadRepository)
+        public GetThreadsPreviewHandler(IThreadRepository threadRepository, IMapper mapper)
         {
             _threadRepository = threadRepository;
+            _mapper = mapper;
         }
 
-        public async Task<Response<IEnumerable<Post>>> Handle(GetThreadsPreviewsQuery request, CancellationToken cancellationToken)
+        public async Task<Response<IEnumerable<PostViewModel>>> Handle(GetThreadsPreviewsQuery request, CancellationToken cancellationToken)
         {
             IEnumerable<Thread> threads;
 
@@ -39,7 +42,7 @@ namespace Menherachan.Application.CQRS.Handlers.BoardHandlers
 
             threads = threads.OrderByDescending(t => t.BumpInUnixTime);
             
-            var data = new List<Post>();
+            var data = new List<PostViewModel>();
             
             foreach (var thread in threads)
             {
@@ -51,17 +54,27 @@ namespace Menherachan.Application.CQRS.Handlers.BoardHandlers
                     
                     if (postCount <= 3)
                     {
-                        data.AddRange(posts.Take(1));
+                        foreach (var post in posts.Take(1))
+                        {
+                            var model = _mapper.Map<PostViewModel>(post);
+                            
+                            data.Add(model);
+                        }
                     }
 
                     if (postCount > 3)
                     {
-                        data.AddRange(posts.Take(3));
+                        foreach (var post in posts.Take(3))
+                        {
+                            var model = _mapper.Map<PostViewModel>(post);
+
+                            data.Add(model);
+                        }
                     }
                 }
             }
 
-            return new Response<IEnumerable<Post>>(data);
+            return new Response<IEnumerable<PostViewModel>>(data);
         }
     }
 }
