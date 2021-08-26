@@ -63,8 +63,8 @@ namespace Menherachan.Infrastructure.Persistence.Repositories
             return await _boards
                 .Include(b => b.Report)
                 .Include(b => b.Thread)
-                .ThenInclude(b => b.Post)
-                .ThenInclude(b => b.File)
+                .Include(b => b.Post)
+                .Include(b => b.File)
                 .AsNoTracking()
                 .ToListAsync();
         }
@@ -74,8 +74,8 @@ namespace Menherachan.Infrastructure.Persistence.Repositories
             return await _boards
                 .Where(condition)
                 .Include(b => b.Thread)
-                .ThenInclude(b => b.Post)
-                .ThenInclude(b => b.File)
+                .Include(b => b.Post)
+                .Include(b => b.File)
                 .Include(b => b.Report)
                 .AsNoTracking()
                 .ToListAsync();

@@ -11,7 +11,7 @@ using Thread = Menherachan.Domain.Entities.DBOs.Thread;
 
 namespace Menherachan.Application.CQRS.Handlers.BoardHandlers
 {
-    public class GetThreadsPreviewHandler : IRequestHandler<GetThreadsPreviewsQuery, Response<IEnumerable<IGrouping<Thread, Post>>>>
+    public class GetThreadsPreviewHandler : IRequestHandler<GetThreadsPreviewsQuery, Response<IEnumerable<Post>>>
     {
         private IThreadRepository _threadRepository;
 
@@ -20,9 +20,22 @@ namespace Menherachan.Application.CQRS.Handlers.BoardHandlers
             _threadRepository = threadRepository;
         }
 
-        public async Task<Response< IEnumerable<IGrouping<Thread, Post>>>> Handle(GetThreadsPreviewsQuery request, CancellationToken cancellationToken)
+        public async Task<Response<IEnumerable<Post>>> Handle(GetThreadsPreviewsQuery request, CancellationToken cancellationToken)
         {
-            var threads = await _threadRepository.GetPagedThreadsWithConditionAndIncludes(t => t.Board.Prefix == request.Prefix, request.Page, request.PageSize);
+            IEnumerable<Thread> threads;
+
+            if (request.Page != 0 && request.PageSize != 0)
+            {
+                threads = await _threadRepository.GetPagedThreadsWithConditionAndIncluded(
+                    t => t.Board.Prefix == request.Prefix,
+                    request.Page,
+                    request.PageSize);
+            }
+            else
+            {
+                threads = await _threadRepository.GetDataWithConditionAndIncluded(
+                    t => t.Board.Prefix == request.Prefix);
+            }
 
             threads = threads.OrderByDescending(t => t.BumpInUnixTime);
             
@@ -48,9 +61,7 @@ namespace Menherachan.Application.CQRS.Handlers.BoardHandlers
                 }
             }
 
-            var result = data.GroupBy(p => p.Thread);
-
-            return new Response<IEnumerable<IGrouping<Thread, Post>>>(result);
+            return new Response<IEnumerable<Post>>(data);
         }
     }
 }

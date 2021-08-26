@@ -7,5 +7,5 @@ using Menherachan.Domain.Entities.ViewModels;
 
 namespace Menherachan.Application.CQRS.Queries.BoardQueries
 {
-    public record GetThreadsPreviewsQuery(string Prefix, int Page, int PageSize) : IRequest<Response<IEnumerable<IGrouping<Thread, Post>>>>;
+    public record GetThreadsPreviewsQuery(string Prefix, int Page, int PageSize) : IRequest<Response<IEnumerable<Post>>>;
 }

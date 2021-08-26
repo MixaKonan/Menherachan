@@ -39,7 +39,7 @@ namespace Menherachan.Infrastructure.Persistence.Repositories
             return await _threads
                 .Include(t => t.Board)
                 .Include(t => t.Post)
-                .ThenInclude(t => t.File)
+                .Include(t => t.File)
                 .Include(t => t.Report)
                 .AsNoTracking()
                 .ToListAsync();
@@ -51,20 +51,21 @@ namespace Menherachan.Infrastructure.Persistence.Repositories
                 .Where(condition)
                 .Include(t => t.Board)
                 .Include(t => t.Post)
-                .ThenInclude(t => t.File)
+                .ThenInclude(p => p.Admin)
+                .Include(t => t.File)
                 .Include(t => t.Report)
                 .AsNoTracking()
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<Thread>> GetPagedThreadsWithIncludes(int page, int pageSize)
+        public async Task<IEnumerable<Thread>> GetPagedThreadsWithIncluded(int page, int pageSize)
         {
             return await _threads
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize)
                 .Include(t => t.Board)
                 .Include(t => t.Post)
-                .ThenInclude(t => t.File)
+                .Include(t => t.File)
                 .Include(t => t.Report)
                 .AsNoTracking()
                 .ToListAsync();
@@ -80,7 +81,7 @@ namespace Menherachan.Infrastructure.Persistence.Repositories
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<Thread>> GetPagedThreadsWithConditionAndIncludes(Expression<Func<Thread, bool>> condition, int page, int pageSize)
+        public async Task<IEnumerable<Thread>> GetPagedThreadsWithConditionAndIncluded(Expression<Func<Thread, bool>> condition, int page, int pageSize)
         {
             return await _threads
                 .Where(condition)
@@ -88,7 +89,7 @@ namespace Menherachan.Infrastructure.Persistence.Repositories
                 .Take(pageSize)
                 .Include(t => t.Board)
                 .Include(t => t.Post)
-                .ThenInclude(t => t.File)
+                .Include(t => t.File)
                 .Include(t => t.Report)
                 .AsNoTracking()
                 .ToListAsync();
