@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace Menherachan.Application.Interfaces
+namespace Menherachan.Application.Interfaces.Repositories
 {
     public interface IRepository<T>
     {

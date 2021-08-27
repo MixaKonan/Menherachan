@@ -1,8 +1,9 @@
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using Menherachan.Application.CQRS.Queries.BoardQueries;
+using Menherachan.Application.CQRS.Queries.Board;
 using Menherachan.Application.Interfaces;
+using Menherachan.Application.Interfaces.Repositories;
 using Menherachan.Domain.Entities.DBOs;
 using Menherachan.Domain.Entities.Responses;
 using Menherachan.Domain.Entities.ViewModels;

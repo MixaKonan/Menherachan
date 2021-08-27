@@ -1,7 +1,8 @@
 using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
-using Menherachan.Application.CQRS.Queries.BoardQueries;
+using Menherachan.Application.CQRS.Queries.Board;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Menherachan.WebAPI.Controllers.v1
@@ -40,6 +41,7 @@ namespace Menherachan.WebAPI.Controllers.v1
             return Ok(result);
         }
 
+        [Authorize]
         [HttpGet("preview")]
         public async Task<IActionResult> GetPreview([FromQuery] GetThreadsPreviewsQuery query)
         {

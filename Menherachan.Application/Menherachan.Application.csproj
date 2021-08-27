@@ -14,8 +14,4 @@
       <ProjectReference Include="..\Menherachan.Domain\Menherachan.Domain.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="CQRS\Commands\BoardCommands" />
-    </ItemGroup>
-
 </Project>

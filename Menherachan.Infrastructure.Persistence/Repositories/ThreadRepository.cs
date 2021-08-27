@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Menherachan.Application.Interfaces;
+using Menherachan.Application.Interfaces.Repositories;
 using Menherachan.Domain.Database;
 using Microsoft.EntityFrameworkCore;
 using Thread = Menherachan.Domain.Entities.DBOs.Thread;

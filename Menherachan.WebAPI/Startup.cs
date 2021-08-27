@@ -3,6 +3,7 @@ using System.Reflection;
 using MediatR;
 using Menherachan.Application;
 using Menherachan.Application.Interfaces;
+using Menherachan.Application.Interfaces.Repositories;
 using Menherachan.Domain.Database;
 using Menherachan.Infrastructure.Persistence.Repositories;
 using Menherachan.Infrastructure.Shared.Mapping;
@@ -57,6 +58,7 @@ namespace Menherachan.WebAPI
             
             services.AddTransient<IBoardRepository, BoardRepository>();
             services.AddTransient<IThreadRepository, ThreadRepository>();
+            services.AddTransient<IAdminRepository, AdminRepository>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
