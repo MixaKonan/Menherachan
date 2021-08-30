@@ -22,7 +22,7 @@ namespace Menherachan.Application.CQRS.Handlers.BoardHandlers
 
         public async Task<Response<IEnumerable<NavMenuBoardViewModel>>> Handle(GetNavMenuBoardsQuery request, CancellationToken cancellationToken)
         {
-            var boards = await _boardRepository.GetDataWithCondition(b => !b.IsHidden);
+            var boards = await _boardRepository.GetDataWithConditionAsync(b => !b.IsHidden);
 
             var data = new List<NavMenuBoardViewModel>();
 

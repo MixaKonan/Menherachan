@@ -30,14 +30,14 @@ namespace Menherachan.Application.CQRS.Handlers.BoardHandlers
 
             if (request.Page != 0 && request.PageSize != 0)
             {
-                threads = await _threadRepository.GetPagedThreadsWithConditionAndIncluded(
+                threads = await _threadRepository.GetPagedThreadsWithConditionAndIncludedAsync(
                     t => t.Board.Prefix == request.Prefix,
                     request.Page,
                     request.PageSize);
             }
             else
             {
-                threads = await _threadRepository.GetDataWithConditionAndIncluded(
+                threads = await _threadRepository.GetDataWithConditionAndIncludedAsync(
                     t => t.Board.Prefix == request.Prefix);
             }
 

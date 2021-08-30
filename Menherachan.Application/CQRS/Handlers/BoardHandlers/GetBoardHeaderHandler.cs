@@ -34,7 +34,7 @@ namespace Menherachan.Application.CQRS.Handlers.BoardHandlers
                 return new Response<BoardHeaderViewModel>(result);
             }
             
-            var board = await _boardRepository.GetBoard(request.Prefix);
+            var board = await _boardRepository.GetBoardAsync(request.Prefix);
 
             if (IsBad(board))
             {

@@ -20,14 +20,14 @@ namespace Menherachan.Infrastructure.Persistence.Repositories
             _threads = context.Threads;
         }
 
-        public async Task<IEnumerable<Thread>> GetData()
+        public async Task<IEnumerable<Thread>> GetDataAsync()
         {
             return await _threads
                 .AsNoTracking()
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<Thread>> GetDataWithCondition(Expression<Func<Thread, bool>> condition)
+        public async Task<IEnumerable<Thread>> GetDataWithConditionAsync(Expression<Func<Thread, bool>> condition)
         {
             return await _threads
                 .Where(condition)
@@ -35,7 +35,7 @@ namespace Menherachan.Infrastructure.Persistence.Repositories
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<Thread>> GetDataWithIncluded()
+        public async Task<IEnumerable<Thread>> GetDataWithIncludedAsync()
         {
             return await _threads
                 .Include(t => t.Board)
@@ -46,7 +46,7 @@ namespace Menherachan.Infrastructure.Persistence.Repositories
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<Thread>> GetDataWithConditionAndIncluded(Expression<Func<Thread, bool>> condition)
+        public async Task<IEnumerable<Thread>> GetDataWithConditionAndIncludedAsync(Expression<Func<Thread, bool>> condition)
         {
             return await _threads
                 .Where(condition)
@@ -60,7 +60,7 @@ namespace Menherachan.Infrastructure.Persistence.Repositories
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<Thread>> GetPagedThreadsWithIncluded(int page, int pageSize)
+        public async Task<IEnumerable<Thread>> GetPagedThreadsWithIncludedAsync(int page, int pageSize)
         {
             return await _threads
                 .Skip((page - 1) * pageSize)
@@ -73,7 +73,7 @@ namespace Menherachan.Infrastructure.Persistence.Repositories
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<Thread>> GetPagedThreadsWithCondition(Expression<Func<Thread, bool>> condition, int page, int pageSize)
+        public async Task<IEnumerable<Thread>> GetPagedThreadsWithConditionAsync(Expression<Func<Thread, bool>> condition, int page, int pageSize)
         {
             return await _threads
                 .Where(condition)
@@ -83,7 +83,7 @@ namespace Menherachan.Infrastructure.Persistence.Repositories
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<Thread>> GetPagedThreadsWithConditionAndIncluded(Expression<Func<Thread, bool>> condition, int page, int pageSize)
+        public async Task<IEnumerable<Thread>> GetPagedThreadsWithConditionAndIncludedAsync(Expression<Func<Thread, bool>> condition, int page, int pageSize)
         {
             return await _threads
                 .Where(condition)

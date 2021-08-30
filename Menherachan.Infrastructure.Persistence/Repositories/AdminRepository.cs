@@ -19,14 +19,14 @@ namespace Menherachan.Infrastructure.Persistence.Repositories
             _admins = context.Admins;
         }
 
-        public async Task<IEnumerable<Admin>> GetData()
+        public async Task<IEnumerable<Admin>> GetDataAsync()
         {
             return await _admins
                 .AsNoTracking()
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<Admin>> GetDataWithCondition(Expression<Func<Admin, bool>> condition)
+        public async Task<IEnumerable<Admin>> GetDataWithConditionAsync(Expression<Func<Admin, bool>> condition)
         {
             return await _admins
                 .Where(condition)
@@ -34,7 +34,7 @@ namespace Menherachan.Infrastructure.Persistence.Repositories
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<Admin>> GetDataWithIncluded()
+        public async Task<IEnumerable<Admin>> GetDataWithIncludedAsync()
         {
             return await _admins
                 .Include(a => a.Ban)
@@ -43,7 +43,7 @@ namespace Menherachan.Infrastructure.Persistence.Repositories
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<Admin>> GetDataWithConditionAndIncluded(Expression<Func<Admin, bool>> condition)
+        public async Task<IEnumerable<Admin>> GetDataWithConditionAndIncludedAsync(Expression<Func<Admin, bool>> condition)
         {
             return await _admins
                 .Where(condition)
@@ -53,12 +53,19 @@ namespace Menherachan.Infrastructure.Persistence.Repositories
                 .ToListAsync();
         }
 
-        public async Task<Admin> Find(Expression<Func<Admin, bool>> condition)
+        public async Task<Admin> FindAsync(Expression<Func<Admin, bool>> condition)
         {
-            return await _admins.FirstAsync(condition);
+            try
+            {
+                return await _admins.FirstAsync(condition);
+            }
+            catch (InvalidOperationException)
+            {
+                return null;
+            }
         }
 
-        public async Task<bool> ThereIsAdmin(Expression<Func<Admin, bool>> condition)
+        public async Task<bool> ThereIsAdminAsync(Expression<Func<Admin, bool>> condition)
         {
             return await _admins.AnyAsync(condition);
         }

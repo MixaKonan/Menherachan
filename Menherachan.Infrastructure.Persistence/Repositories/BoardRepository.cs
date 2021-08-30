@@ -20,14 +20,14 @@ namespace Menherachan.Infrastructure.Persistence.Repositories
             _boards = context.Boards;
         }
 
-        public async Task<IEnumerable<Board>> GetData()
+        public async Task<IEnumerable<Board>> GetDataAsync()
         {
             return await _boards
                 .AsNoTracking()
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<Board>> GetDataWithCondition(Expression<Func<Board, bool>> condition)
+        public async Task<IEnumerable<Board>> GetDataWithConditionAsync(Expression<Func<Board, bool>> condition)
         {
             return await _boards
                 .Where(condition)
@@ -35,7 +35,7 @@ namespace Menherachan.Infrastructure.Persistence.Repositories
                 .ToListAsync();
         }
 
-        public async Task<Board> GetBoard(string prefix)
+        public async Task<Board> GetBoardAsync(string prefix)
         {
             try
             {
@@ -47,7 +47,7 @@ namespace Menherachan.Infrastructure.Persistence.Repositories
             }
         }
 
-        public async Task<Board> GetBoard(Expression<Func<Board, bool>> condition)
+        public async Task<Board> GetBoardAsync(Expression<Func<Board, bool>> condition)
         {
             try
             {
@@ -59,7 +59,7 @@ namespace Menherachan.Infrastructure.Persistence.Repositories
             }
         }
 
-        public async Task<IEnumerable<Board>> GetDataWithIncluded()
+        public async Task<IEnumerable<Board>> GetDataWithIncludedAsync()
         {
             return await _boards
                 .Include(b => b.Report)
@@ -70,7 +70,7 @@ namespace Menherachan.Infrastructure.Persistence.Repositories
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<Board>> GetDataWithConditionAndIncluded(Expression<Func<Board, bool>> condition)
+        public async Task<IEnumerable<Board>> GetDataWithConditionAndIncludedAsync(Expression<Func<Board, bool>> condition)
         {
             return await _boards
                 .Where(condition)

@@ -7,7 +7,7 @@ namespace Menherachan.Application.Interfaces.Repositories
 {
     public interface IAdminRepository : IRepository<Admin>
     {
-        public Task<Admin> Find(Expression<Func<Admin, bool>> condition);
-        public Task<bool> ThereIsAdmin(Expression<Func<Admin, bool>> condition);
+        public Task<Admin> FindAsync(Expression<Func<Admin, bool>> condition);
+        public Task<bool> ThereIsAdminAsync(Expression<Func<Admin, bool>> condition);
     }
 }
