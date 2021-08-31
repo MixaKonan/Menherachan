@@ -24,12 +24,5 @@ namespace Menherachan.WebAPI.Controllers
             
             return Ok(response);
         }
-        
-        [HttpPost]
-        [Route("logout")]
-        public IActionResult Logout()
-        {
-            return Ok("Logout.");
-        }
     }
 }
