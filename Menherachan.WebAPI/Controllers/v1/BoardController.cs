@@ -1,5 +1,4 @@
 using System.Threading.Tasks;
-using AutoMapper;
 using MediatR;
 using Menherachan.Application.CQRS.Queries.Board;
 using Microsoft.AspNetCore.Authorization;

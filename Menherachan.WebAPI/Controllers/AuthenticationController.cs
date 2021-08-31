@@ -1,8 +1,6 @@
-using System;
 using System.Threading.Tasks;
 using MediatR;
 using Menherachan.Application.CQRS.Commands.Authentication;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Menherachan.WebAPI.Controllers
@@ -19,24 +17,19 @@ namespace Menherachan.WebAPI.Controllers
         }
 
         [HttpPost]
-        [Route("authenticate")]
+        [Route("login")]
         public async Task<IActionResult> Authenticate([FromBody] AuthenticationRequest request)
         {
             var response = await _mediator.Send(request);
             
-            SetTokenCookie(response.Data.Token.ToString());
-            
-            return Ok();
+            return Ok(response);
         }
         
-        private void SetTokenCookie(string token)
+        [HttpPost]
+        [Route("logout")]
+        public IActionResult Logout()
         {
-            var cookieOptions = new CookieOptions
-            {
-                HttpOnly = true,
-                Expires = DateTime.UtcNow.AddDays(7)
-            };
-            Response.Cookies.Append("AspNetCore.Application.Id", token, cookieOptions);
+            return Ok("Logout.");
         }
     }
 }

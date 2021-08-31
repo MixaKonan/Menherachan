@@ -1,12 +1,15 @@
 using System;
 using System.Reflection;
+using System.Text;
 using MediatR;
 using Menherachan.Application;
 using Menherachan.Application.Interfaces;
 using Menherachan.Application.Interfaces.Repositories;
+using Menherachan.Application.Interfaces.Services;
 using Menherachan.Domain.Database;
 using Menherachan.Infrastructure.Persistence.Repositories;
 using Menherachan.Infrastructure.Shared.Mapping;
+using Menherachan.Infrastructure.Shared.Services;
 using Menherachan.WebAPI.Middleware;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -63,9 +66,19 @@ namespace Menherachan.WebAPI
                 {
                     options.RequireHttpsMetadata = true;
                     options.SaveToken = true;
-                    options.TokenValidationParameters = new TokenValidationParameters();
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,    
+                        ValidateAudience = true,    
+                        ValidateLifetime = true,    
+                        ValidateIssuerSigningKey = true,    
+                        ValidIssuer = Configuration["Jwt:Issuer"],    
+                        ValidAudience = Configuration["Jwt:Audience"],    
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))    
+
+                    };
                 });
-            
+
             services.AddDbContext<ApplicationDbContext>
             (options => options.UseMySql(Configuration.GetConnectionString("DefaultConnection"), new MariaDbServerVersion(new Version(10, 3, 27)),
                 opt => opt.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery)));
@@ -76,6 +89,7 @@ namespace Menherachan.WebAPI
             
             services.AddTransient<IBoardRepository, BoardRepository>();
             services.AddTransient<IThreadRepository, ThreadRepository>();
+            services.AddTransient<IAdminService, AdminService>();
             services.AddTransient<IAdminRepository, AdminRepository>();
         }
 
