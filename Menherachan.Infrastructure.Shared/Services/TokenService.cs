@@ -5,6 +5,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
+using Menherachan.Application.Interfaces.Services;
 using Menherachan.Domain.Entities.DBOs;
 using Menherachan.Domain.Entities.Responses;
 using Microsoft.Extensions.Configuration;
@@ -12,7 +13,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace Menherachan.Infrastructure.Shared.Services
 {
-    public class TokenService
+    public class TokenService : ITokenService
     {
         private readonly IConfiguration _configuration;
 

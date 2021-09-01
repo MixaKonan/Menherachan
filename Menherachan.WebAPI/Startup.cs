@@ -10,6 +10,7 @@ using Menherachan.Domain.Database;
 using Menherachan.Infrastructure.Persistence.Repositories;
 using Menherachan.Infrastructure.Shared.Mapping;
 using Menherachan.Infrastructure.Shared.Services;
+using Menherachan.WebAPI.Cookies;
 using Menherachan.WebAPI.Middleware;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -89,8 +90,10 @@ namespace Menherachan.WebAPI
             
             services.AddTransient<IBoardRepository, BoardRepository>();
             services.AddTransient<IThreadRepository, ThreadRepository>();
-            services.AddTransient<IAdminService, AdminService>();
             services.AddTransient<IAdminRepository, AdminRepository>();
+            
+            services.AddTransient<ITokenService, TokenService>();
+            services.AddTransient<ICookieService, CookieService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

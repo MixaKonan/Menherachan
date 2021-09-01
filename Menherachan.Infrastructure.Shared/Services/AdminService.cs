@@ -1,17 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
 using Menherachan.Application.Exceptions;
 using Menherachan.Application.Interfaces.Repositories;
 using Menherachan.Application.Interfaces.Services;
 using Menherachan.Domain.Entities.DBOs;
 using Menherachan.Domain.Entities.Responses;
-using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
 
 namespace Menherachan.Infrastructure.Shared.Services
 {
