@@ -17,13 +17,13 @@ namespace Menherachan.Infrastructure.Shared.Services
 {
     public class AdminService : IAdminService
     {
-        private IAdminRepository _adminRepository;
-        private IConfiguration _configuration;
+        private readonly  IAdminRepository _adminRepository;
+        private readonly ITokenService _tokenService;
 
-        public AdminService(IAdminRepository adminRepository, IConfiguration configuration)
+        public AdminService(IAdminRepository adminRepository, ITokenService tokenService)
         {
             _adminRepository = adminRepository;
-            _configuration = configuration;
+            _tokenService = tokenService;
         }
 
         public async Task<AuthenticationResponse> AuthenticateAsync(string username, string password)
@@ -35,7 +35,7 @@ namespace Menherachan.Infrastructure.Shared.Services
                 throw new ApiException($"No admins found with {username} credentials.");
             }
 
-            var token = GenerateToken(admin);
+            var token = _tokenService.GenerateJwtToken(admin);
 
             return new AuthenticationResponse
             {
@@ -49,32 +49,6 @@ namespace Menherachan.Infrastructure.Shared.Services
         {
             var hash = await HashingService.GetHashFromStringAsync(password);
             return await _adminRepository.FindAsync(a => a.Email == username && a.PasswordHash == hash);
-        }
-
-        private string GenerateToken(Admin admin)
-        {
-            var nowDate = DateTime.Now;
-            var expireDate = nowDate.AddDays(7);
-            
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
-            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-            var claims = new List<Claim>
-            {
-                new(ClaimTypes.Email, admin.Email),
-                new(ClaimTypes.Name, admin.Login),
-                new(JwtRegisteredClaimNames.Exp, expireDate.ToString(CultureInfo.InvariantCulture))
-            };
-
-            var token = new JwtSecurityToken(
-                _configuration["Jwt:Issuer"],
-                _configuration["Jwt:Audience"],
-                claims,
-                nowDate,
-                expireDate,
-                credentials
-            );
-
-            return new JwtSecurityTokenHandler().WriteToken(token);
         }
     }
 }
