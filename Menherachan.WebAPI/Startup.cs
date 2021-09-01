@@ -93,6 +93,7 @@ namespace Menherachan.WebAPI
             services.AddTransient<IAdminRepository, AdminRepository>();
             
             services.AddTransient<ITokenService, TokenService>();
+            services.AddTransient<IAdminService, AdminService>();
             services.AddTransient<ICookieService, CookieService>();
         }
 
