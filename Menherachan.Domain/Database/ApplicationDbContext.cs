@@ -22,5 +22,6 @@ namespace Menherachan.Domain.Database
         public DbSet<Post> Posts { get; set; }
         public DbSet<Report> Reports { get; set; }
         public DbSet<Thread> Threads { get; set; }
+        public DbSet<Token> Tokens { get; set; }
     }
 }

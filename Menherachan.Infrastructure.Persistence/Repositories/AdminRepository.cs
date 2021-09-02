@@ -19,6 +19,30 @@ namespace Menherachan.Infrastructure.Persistence.Repositories
             _admins = context.Admins;
         }
 
+        public async Task DeleteAsync(Admin entity)
+        {
+            _admins.Remove(entity);
+            await this.Context.SaveChangesAsync();
+        }
+
+        public async Task DeleteRangeAsync(IEnumerable<Admin> entities)
+        {
+            _admins.RemoveRange(entities);
+            await this.Context.SaveChangesAsync();
+        }
+
+        public async Task AddAsync(Admin entity)
+        {
+            await _admins.AddAsync(entity);
+            await this.Context.SaveChangesAsync();
+        }
+
+        public async Task AddRangeAsync(IEnumerable<Admin> entities)
+        {
+            await _admins.AddRangeAsync(entities);
+            await this.Context.SaveChangesAsync();
+        }
+
         public async Task<IEnumerable<Admin>> GetDataAsync()
         {
             return await _admins

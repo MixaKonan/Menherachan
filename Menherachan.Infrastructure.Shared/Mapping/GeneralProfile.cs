@@ -1,6 +1,7 @@
 using System;
 using AutoMapper;
 using Menherachan.Domain.Entities.DBOs;
+using Menherachan.Domain.Entities.Responses;
 using Menherachan.Domain.Entities.ViewModels.Common;
 
 namespace Menherachan.Infrastructure.Shared.Mapping
@@ -20,6 +21,11 @@ namespace Menherachan.Infrastructure.Shared.Mapping
                 .ForMember(view => view.ColorCode, admin => admin.MapFrom(a => a.NicknameColorCode));
 
             CreateMap<File, FileViewModel>();
+
+            CreateMap<Token, RefreshToken>()
+                .ForMember(rt => rt.Token, t => t.MapFrom(token => token.TokenString))
+                .ForMember(rt => rt.ExpiresAt, t => t.MapFrom(token => token.ExpiresAt))
+                .ReverseMap();
         }
     }
 }

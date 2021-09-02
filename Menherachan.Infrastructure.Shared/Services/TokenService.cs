@@ -25,7 +25,7 @@ namespace Menherachan.Infrastructure.Shared.Services
         public string GenerateJwtToken(Admin admin)
         {
             var nowDate = DateTime.Now;
-            var expireDate = nowDate.AddDays(7);
+            var expireDate = nowDate.AddMinutes(15);
             
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);

@@ -81,5 +81,28 @@ namespace Menherachan.Infrastructure.Persistence.Repositories
                 .AsNoTracking()
                 .ToListAsync();
         }
+
+        public async Task DeleteAsync(Board entity)
+        {
+            _boards.Remove(entity);
+            await this.Context.SaveChangesAsync();
+        }
+
+        public async Task DeleteRangeAsync(IEnumerable<Board> entities)
+        {
+            _boards.RemoveRange(entities);
+            await this.Context.SaveChangesAsync();
+        }
+
+        public async Task AddAsync(Board entity)
+        {
+            await _boards.AddAsync(entity);
+            await this.Context.SaveChangesAsync();
+        }
+
+        public Task AddRangeAsync(IEnumerable<Board> entities)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

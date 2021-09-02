@@ -4,11 +4,11 @@ namespace Menherachan.Infrastructure.Persistence.Repositories
 {
     public class BaseRepository
     {
-        private ApplicationDbContext _context;
+        protected ApplicationDbContext Context;
 
         public BaseRepository(ApplicationDbContext context)
         {
-            _context = context;
+            Context = context;
         }
     }
 }

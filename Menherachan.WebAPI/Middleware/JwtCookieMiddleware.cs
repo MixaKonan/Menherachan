@@ -14,7 +14,7 @@ namespace Menherachan.WebAPI.Middleware
 
         public async Task Invoke(HttpContext context)
         {
-            var token = context.Request.Cookies[".AspNetCore.Application.Id"];
+            var token = context.Request.Cookies["ASP.NET.Core.Info"];
             if (!string.IsNullOrEmpty(token))
             {
                 context.Request.Headers.Add("Authorization", "Bearer " + token);

@@ -60,6 +60,30 @@ namespace Menherachan.Infrastructure.Persistence.Repositories
                 .ToListAsync();
         }
 
+        public async Task DeleteAsync(Thread entity)
+        {
+            _threads.Remove(entity);
+            await this.Context.SaveChangesAsync();
+        }
+
+        public async Task DeleteRangeAsync(IEnumerable<Thread> entities)
+        {
+            _threads.RemoveRange(entities);
+            await this.Context.SaveChangesAsync();
+        }
+
+        public async Task AddAsync(Thread entity)
+        {
+            await _threads.AddAsync(entity);
+            await this.Context.SaveChangesAsync();
+        }
+
+        public async Task AddRangeAsync(IEnumerable<Thread> entities)
+        {
+            await _threads.AddRangeAsync(entities);
+            await this.Context.SaveChangesAsync();
+        }
+
         public async Task<IEnumerable<Thread>> GetPagedThreadsWithIncludedAsync(int page, int pageSize)
         {
             return await _threads

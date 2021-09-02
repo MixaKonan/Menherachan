@@ -1,4 +1,6 @@
+using System;
 using System.Threading.Tasks;
+using AutoMapper;
 using Menherachan.Application.Exceptions;
 using Menherachan.Application.Interfaces.Repositories;
 using Menherachan.Application.Interfaces.Services;
@@ -9,16 +11,20 @@ namespace Menherachan.Infrastructure.Shared.Services
 {
     public class AdminService : IAdminService
     {
-        private readonly  IAdminRepository _adminRepository;
+        private readonly IAdminRepository _adminRepository;
+        private readonly ITokenRepository _tokenRepository;
         private readonly ITokenService _tokenService;
+        private readonly IMapper _mapper;
 
-        public AdminService(IAdminRepository adminRepository, ITokenService tokenService)
+        public AdminService(IAdminRepository adminRepository, ITokenService tokenService, ITokenRepository tokenRepository, IMapper mapper)
         {
             _adminRepository = adminRepository;
             _tokenService = tokenService;
+            _tokenRepository = tokenRepository;
+            _mapper = mapper;
         }
 
-        public async Task<AuthenticationResponse> AuthenticateAsync(string username, string password)
+        public async Task<Tuple<AuthenticationResponse, RefreshToken>> AuthenticateAsync(string username, string password)
         {
             var admin = await IsValidCredentialsAsync(username, password);
             
@@ -27,14 +33,28 @@ namespace Menherachan.Infrastructure.Shared.Services
                 throw new ApiException($"No admins found with {username} credentials.");
             }
 
-            var token = _tokenService.GenerateJwtToken(admin);
+            var jwtToken = _tokenService.GenerateJwtToken(admin);
+            var refreshToken = _tokenService.GenerateRefreshToken();
+            
+            await _tokenRepository.AddAsync(_mapper.Map<Token>(refreshToken));
 
-            return new AuthenticationResponse
+            var authResponse = new AuthenticationResponse
             {
                 Email = admin.Email,
                 Nickname = admin.Login,
-                Token = token
+                Token = jwtToken
             };
+            
+            return new Tuple<AuthenticationResponse, RefreshToken>(authResponse, refreshToken);
+        }
+
+        public async Task<RefreshToken> RefreshAdminToken()
+        {
+            var refreshToken = _tokenService.GenerateRefreshToken();
+
+            await _tokenRepository.AddAsync(_mapper.Map<Token>(refreshToken));
+            
+            return refreshToken;
         }
 
         private async Task<Admin> IsValidCredentialsAsync(string username, string password)

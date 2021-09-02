@@ -75,8 +75,7 @@ namespace Menherachan.WebAPI
                         ValidateIssuerSigningKey = true,    
                         ValidIssuer = Configuration["Jwt:Issuer"],    
                         ValidAudience = Configuration["Jwt:Audience"],    
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))    
-
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
                     };
                 });
 
@@ -91,6 +90,7 @@ namespace Menherachan.WebAPI
             services.AddTransient<IBoardRepository, BoardRepository>();
             services.AddTransient<IThreadRepository, ThreadRepository>();
             services.AddTransient<IAdminRepository, AdminRepository>();
+            services.AddTransient<ITokenRepository, TokenRepository>();
             
             services.AddTransient<ITokenService, TokenService>();
             services.AddTransient<IAdminService, AdminService>();
@@ -119,7 +119,7 @@ namespace Menherachan.WebAPI
                 Secure = CookieSecurePolicy.Always
             });
 
-            app.UseJwtInCookies();
+            //app.UseJwtInCookies();
             
             app.UseAuthentication();
             app.UseAuthorization();

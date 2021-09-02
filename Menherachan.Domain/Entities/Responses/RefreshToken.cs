@@ -12,5 +12,10 @@ namespace Menherachan.Domain.Entities.Responses
         {
             CreatedAt = DateTime.Now;
         }
+
+        public override string ToString()
+        {
+            return Token;
+        }
     }
 }

@@ -14,5 +14,10 @@ namespace Menherachan.Application.Interfaces.Repositories
         public Task<IEnumerable<T>> GetDataWithIncludedAsync();
         
         public Task<IEnumerable<T>> GetDataWithConditionAndIncludedAsync(Expression<Func<T, bool>> condition);
+
+        public Task DeleteAsync(T entity);
+        public Task DeleteRangeAsync(IEnumerable<T> entities);
+        public Task AddAsync(T entity);
+        public Task AddRangeAsync(IEnumerable<T> entities);
     }
 }

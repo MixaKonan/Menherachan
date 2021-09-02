@@ -1,3 +1,4 @@
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
@@ -7,7 +8,7 @@ using Menherachan.Domain.Entities.Responses;
 
 namespace Menherachan.Application.CQRS.Handlers.Authentication
 {
-    public class AuthenticationHandler : IRequestHandler<AuthenticationRequest, Response<AuthenticationResponse>>
+    public class AuthenticationHandler : IRequestHandler<AuthenticationRequest, Response<Tuple<AuthenticationResponse, RefreshToken>>>
     {
         private readonly IAdminService _adminService;
 
@@ -16,10 +17,10 @@ namespace Menherachan.Application.CQRS.Handlers.Authentication
             _adminService = adminService;
         }
 
-        public async Task<Response<AuthenticationResponse>> Handle(AuthenticationRequest request, CancellationToken cancellationToken)
+        public async Task<Response<Tuple<AuthenticationResponse, RefreshToken>>> Handle(AuthenticationRequest request, CancellationToken cancellationToken)
         {
             var data = await _adminService.AuthenticateAsync(request.Email, request.Password);
-            return new Response<AuthenticationResponse>(data);
+            return new Response<Tuple<AuthenticationResponse, RefreshToken>>(data);
         }
     }
 }
