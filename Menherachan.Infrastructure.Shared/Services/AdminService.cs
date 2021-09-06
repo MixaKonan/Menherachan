@@ -13,7 +13,9 @@ namespace Menherachan.Infrastructure.Shared.Services
     {
         private readonly IAdminRepository _adminRepository;
         private readonly ITokenRepository _tokenRepository;
+        
         private readonly ITokenService _tokenService;
+        
         private readonly IMapper _mapper;
 
         public AdminService(IAdminRepository adminRepository, ITokenService tokenService, ITokenRepository tokenRepository, IMapper mapper)
@@ -26,7 +28,7 @@ namespace Menherachan.Infrastructure.Shared.Services
 
         public async Task<Tuple<AuthenticationResponse, RefreshToken>> AuthenticateAsync(string username, string password)
         {
-            var admin = await IsValidCredentialsAsync(username, password);
+            var admin = await GetAdminByCredentialsAsync(username, password);
             
             if (admin is null)
             {
@@ -48,16 +50,37 @@ namespace Menherachan.Infrastructure.Shared.Services
             return new Tuple<AuthenticationResponse, RefreshToken>(authResponse, refreshToken);
         }
 
-        public async Task<RefreshToken> RefreshAdminToken()
+        public async Task<Tuple<AuthenticationResponse, RefreshToken>> RefreshAdminToken(string token, string username, string password)
         {
-            var refreshToken = _tokenService.GenerateRefreshToken();
+            var tkn = await _tokenRepository.GetToken(token);
 
-            await _tokenRepository.AddAsync(_mapper.Map<Token>(refreshToken));
+            if (tkn.ExpiresAt < DateTime.Now)
+            {
+                throw new ApiException("Token has expired.");
+            }
             
-            return refreshToken;
+            var admin = await GetAdminByCredentialsAsync(username, password);
+            
+            if (admin is null)
+            {
+                throw new ApiException($"No admins found with {username} credentials.");
+            }
+            
+            var refreshToken = _tokenService.GenerateRefreshToken();
+            
+            var response = new AuthenticationResponse
+            {
+                Email = admin.Email,
+                Nickname = admin.Login,
+                Token = _tokenService.GenerateJwtToken(admin)
+            };
+            
+            await _tokenRepository.AddAsync(_mapper.Map<Token>(refreshToken));
+
+            return new Tuple<AuthenticationResponse, RefreshToken>(response, refreshToken);
         }
 
-        private async Task<Admin> IsValidCredentialsAsync(string username, string password)
+        private async Task<Admin> GetAdminByCredentialsAsync(string username, string password)
         {
             var hash = await HashingService.GetHashFromStringAsync(password);
             return await _adminRepository.FindAsync(a => a.Email == username && a.PasswordHash == hash);

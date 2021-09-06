@@ -15,17 +15,14 @@ namespace Menherachan.WebAPI.Controllers
     {
         private readonly IMediator _mediator;
         private readonly ICookieService _cookieService;
-        private readonly IAdminService _adminService;
         private readonly IConfiguration _configuration;
 
         public AuthenticationController(IMediator mediator,
             ICookieService cookieService,
-            IConfiguration configuration,
-            IAdminService adminService)
+            IConfiguration configuration)
         {
             _mediator = mediator;
             _cookieService = cookieService;
-            _adminService = adminService;
             _configuration = configuration;
         }
 
@@ -54,21 +51,25 @@ namespace Menherachan.WebAPI.Controllers
 
         [HttpPost]
         [Authorize]
-        [Route("/refresh-token")]
-        public async Task<IActionResult> GetRefreshToken()
+        [Route("refresh-token")]
+        public async Task<IActionResult> GetRefreshToken([FromBody] RefreshTokenRequest request)
         {
-            var refreshToken = Request.Cookies[_configuration["TokenCookieName"]];
+            var token = Request.Cookies[_configuration["TokenCookieName"]];
 
-            if (string.IsNullOrEmpty(refreshToken) || string.IsNullOrWhiteSpace(refreshToken))
+            if (string.IsNullOrEmpty(token) || string.IsNullOrWhiteSpace(token))
             {
-                return BadRequest("Token cookie is required for this operation");
+                return BadRequest("Token cookie is required for this operation.");
             }
 
-            var newToken = await _adminService.RefreshAdminToken();
+            request.Token = token;
+            
+            var data = await _mediator.Send(request);
+            var response = data.Data.Item1;
+            var refreshToken = data.Data.Item2;
+            
+            _cookieService.SetTokenCookie(this.Response, refreshToken.ToString());
 
-            _cookieService.SetTokenCookie(this.Response, newToken.ToString());
-
-            return Ok("Token refreshed");
+            return Ok(response);
         }
     }
 }

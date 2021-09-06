@@ -7,6 +7,6 @@ namespace Menherachan.Application.Interfaces.Services
     public interface IAdminService
     {
         public Task<Tuple<AuthenticationResponse, RefreshToken>> AuthenticateAsync(string username, string password);
-        public Task<RefreshToken> RefreshAdminToken();
+        public Task<Tuple<AuthenticationResponse, RefreshToken>> RefreshAdminToken(string token, string username, string password);
     }
 }

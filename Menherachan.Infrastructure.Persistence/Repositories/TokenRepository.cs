@@ -62,5 +62,10 @@ namespace Menherachan.Infrastructure.Persistence.Repositories
             await _tokens.AddRangeAsync(entities);
             await this.Context.SaveChangesAsync();
         }
+
+        public async Task<Token> GetToken(string token)
+        {
+            return await _tokens.FirstAsync(t => t.TokenString == token);
+        }
     }
 }

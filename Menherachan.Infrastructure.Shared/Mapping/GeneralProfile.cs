@@ -24,6 +24,7 @@ namespace Menherachan.Infrastructure.Shared.Mapping
 
             CreateMap<Token, RefreshToken>()
                 .ForMember(rt => rt.Token, t => t.MapFrom(token => token.TokenString))
+                .ForMember(rt => rt.CreatedAt, t => t.MapFrom(token => token.CreatedAt))
                 .ForMember(rt => rt.ExpiresAt, t => t.MapFrom(token => token.ExpiresAt))
                 .ReverseMap();
         }

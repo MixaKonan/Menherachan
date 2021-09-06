@@ -8,18 +8,19 @@ using Menherachan.Domain.Entities.Responses;
 
 namespace Menherachan.Application.CQRS.Handlers.Authentication
 {
-    public class AuthenticationHandler : IRequestHandler<AuthenticationRequest, Response<Tuple<AuthenticationResponse, RefreshToken>>>
+    public class RefreshTokenHandler : IRequestHandler<RefreshTokenRequest, Response<Tuple<AuthenticationResponse, RefreshToken>>>
     {
         private readonly IAdminService _adminService;
 
-        public AuthenticationHandler(IAdminService adminService)
+        public RefreshTokenHandler(IAdminService adminService)
         {
             _adminService = adminService;
         }
 
-        public async Task<Response<Tuple<AuthenticationResponse, RefreshToken>>> Handle(AuthenticationRequest request, CancellationToken cancellationToken)
+        public async Task<Response<Tuple<AuthenticationResponse, RefreshToken>>> Handle(RefreshTokenRequest request, CancellationToken cancellationToken)
         {
-            var data = await _adminService.AuthenticateAsync(request.Username, request.Password);
+            var data = await _adminService.RefreshAdminToken(request.Token, request.Username, request.Password);
+
             return new Response<Tuple<AuthenticationResponse, RefreshToken>>(data);
         }
     }

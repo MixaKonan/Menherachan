@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -12,8 +13,8 @@ namespace Menherachan.Domain.Entities.DBOs
         [Column("token")]
         public string TokenString { get; set; }
         [Column("created_at")]
-        public int CreatedAt { get; set; }
+        public DateTime CreatedAt { get; set; }
         [Column("expires_at")]
-        public int ExpiresAt { get; set; }
+        public DateTime ExpiresAt { get; set; }
     }
 }
