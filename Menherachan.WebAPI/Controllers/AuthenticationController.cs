@@ -1,9 +1,10 @@
+using System;
 using System.Threading.Tasks;
 using MediatR;
 using Menherachan.Application.CQRS.Commands.Authentication;
-using Menherachan.Application.Interfaces.Services;
 using Menherachan.WebAPI.Cookies;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 
@@ -14,15 +15,13 @@ namespace Menherachan.WebAPI.Controllers
     public class AuthenticationController : Controller
     {
         private readonly IMediator _mediator;
-        private readonly ICookieService _cookieService;
         private readonly IConfiguration _configuration;
 
-        public AuthenticationController(IMediator mediator,
-            ICookieService cookieService,
+        public AuthenticationController(
+            IMediator mediator,
             IConfiguration configuration)
         {
             _mediator = mediator;
-            _cookieService = cookieService;
             _configuration = configuration;
         }
 
@@ -31,12 +30,11 @@ namespace Menherachan.WebAPI.Controllers
         public async Task<IActionResult> Authenticate([FromBody] AuthenticationRequest request)
         {
             var data = await _mediator.Send(request);
-            var response = data.Data.Item1;
             var refreshToken = data.Data.Item2;
 
-            _cookieService.SetTokenCookie(this.Response, refreshToken.ToString());
+                SetTokenCookie(refreshToken.ToString());
 
-            return Ok(response);
+            return Ok(data);
         }
 
         [HttpPost]
@@ -44,32 +42,40 @@ namespace Menherachan.WebAPI.Controllers
         [Route("logout")]
         public IActionResult Logout()
         {
-            _cookieService.RemoveTokenCookie(this.Response);
+            Response.Cookies.Delete(_configuration["Jwt:TokenCookieName"]);
 
             return Ok("Successfully logged out.");
         }
 
         [HttpPost]
-        [Authorize]
         [Route("refresh-token")]
-        public async Task<IActionResult> GetRefreshToken([FromBody] RefreshTokenRequest request)
+        public async Task<IActionResult> RefreshToken()
         {
-            var token = Request.Cookies[_configuration["TokenCookieName"]];
+            var token = Request.Cookies[_configuration["Jwt:TokenCookieName"]];
 
             if (string.IsNullOrEmpty(token) || string.IsNullOrWhiteSpace(token))
             {
-                return BadRequest("Token cookie is required for this operation.");
+                return Unauthorized("No required cookies found.");
             }
 
-            request.Token = token;
-            
+            var request = new RefreshTokenRequest(token);
+
             var data = await _mediator.Send(request);
-            var response = data.Data.Item1;
             var refreshToken = data.Data.Item2;
             
-            _cookieService.SetTokenCookie(this.Response, refreshToken.ToString());
+            SetTokenCookie(refreshToken.ToString());
 
-            return Ok(response);
+            return Ok(data);
+        }
+        
+        private void SetTokenCookie(string token)
+        {
+            var cookieOptions = new CookieOptions
+            {
+                HttpOnly = true,
+                Expires = DateTime.UtcNow.AddDays(7)
+            };
+            Response.Cookies.Append(_configuration["Jwt:TokenCookieName"], token, cookieOptions);
         }
     }
 }

@@ -19,7 +19,7 @@ namespace Menherachan.Application.CQRS.Handlers.Authentication
 
         public async Task<Response<Tuple<AuthenticationResponse, RefreshToken>>> Handle(RefreshTokenRequest request, CancellationToken cancellationToken)
         {
-            var data = await _adminService.RefreshAdminToken(request.Token, request.Username, request.Password);
+            var data = await _adminService.RefreshAdminToken(request.Token);
 
             return new Response<Tuple<AuthenticationResponse, RefreshToken>>(data);
         }

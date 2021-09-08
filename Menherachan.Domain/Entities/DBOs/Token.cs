@@ -10,11 +10,18 @@ namespace Menherachan.Domain.Entities.DBOs
         [Key]
         [Column("token_id")]
         public int TokenId { get; set; }
+        
+        [Column("admin_id")]
+        [ForeignKey("FK_AdminToken")] 
+        public int AdminId { get; set; }
+        
         [Column("token")]
         public string TokenString { get; set; }
         [Column("created_at")]
         public DateTime CreatedAt { get; set; }
         [Column("expires_at")]
         public DateTime ExpiresAt { get; set; }
+        
+        public Admin Admin { get; set; }
     }
 }

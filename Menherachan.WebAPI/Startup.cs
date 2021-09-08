@@ -52,11 +52,18 @@ namespace Menherachan.WebAPI
 
             services.AddCors(o => o.AddPolicy("Policy", builder =>
             {
-                builder.AllowAnyHeader()
+                builder.WithOrigins("https://localhost:3000")
+                    .AllowAnyHeader()
                     .AllowAnyMethod()
-                    .AllowAnyOrigin();
+                    .AllowCredentials();
             }));
 
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+                options.Secure = CookieSecurePolicy.Always;
+            });
+            
             services.AddAuthentication(options =>
                 {
                     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

@@ -37,46 +37,39 @@ namespace Menherachan.Infrastructure.Shared.Services
 
             var jwtToken = _tokenService.GenerateJwtToken(admin);
             var refreshToken = _tokenService.GenerateRefreshToken();
+            var token = _mapper.Map<Token>(refreshToken);
+            token.Admin = admin;
             
-            await _tokenRepository.AddAsync(_mapper.Map<Token>(refreshToken));
+            await _tokenRepository.AddAsync(token);
 
             var authResponse = new AuthenticationResponse
             {
                 Email = admin.Email,
                 Nickname = admin.Login,
-                Token = jwtToken
+                Bearer = jwtToken
             };
             
             return new Tuple<AuthenticationResponse, RefreshToken>(authResponse, refreshToken);
         }
 
-        public async Task<Tuple<AuthenticationResponse, RefreshToken>> RefreshAdminToken(string token, string username, string password)
+        public async Task<Tuple<AuthenticationResponse, RefreshToken>> RefreshAdminToken(string token)
         {
-            var tkn = await _tokenRepository.GetToken(token);
+            var tkn = await _tokenRepository.GetTokenWithIncluded(token);
 
             if (tkn.ExpiresAt < DateTime.Now)
             {
                 throw new ApiException("Token has expired.");
             }
-            
-            var admin = await GetAdminByCredentialsAsync(username, password);
-            
-            if (admin is null)
-            {
-                throw new ApiException($"No admins found with {username} credentials.");
-            }
-            
-            var refreshToken = _tokenService.GenerateRefreshToken();
+
+            var refreshToken = _mapper.Map<RefreshToken>(tkn);
             
             var response = new AuthenticationResponse
             {
-                Email = admin.Email,
-                Nickname = admin.Login,
-                Token = _tokenService.GenerateJwtToken(admin)
+                Email = tkn.Admin.Email,
+                Nickname = tkn.Admin.Login,
+                Bearer = _tokenService.GenerateJwtToken(tkn.Admin)
             };
             
-            await _tokenRepository.AddAsync(_mapper.Map<Token>(refreshToken));
-
             return new Tuple<AuthenticationResponse, RefreshToken>(response, refreshToken);
         }
 
