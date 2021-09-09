@@ -32,7 +32,7 @@ namespace Menherachan.WebAPI.Controllers
             var data = await _mediator.Send(request);
             var refreshToken = data.Data.Item2;
 
-                SetTokenCookie(refreshToken.ToString());
+            SetTokenCookie(refreshToken.ToString());
 
             return Ok(data);
         }
@@ -62,12 +62,12 @@ namespace Menherachan.WebAPI.Controllers
 
             var data = await _mediator.Send(request);
             var refreshToken = data.Data.Item2;
-            
+
             SetTokenCookie(refreshToken.ToString());
 
             return Ok(data);
         }
-        
+
         private void SetTokenCookie(string token)
         {
             var cookieOptions = new CookieOptions

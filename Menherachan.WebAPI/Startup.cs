@@ -126,8 +126,6 @@ namespace Menherachan.WebAPI
                 Secure = CookieSecurePolicy.Always
             });
 
-            //app.UseJwtInCookies();
-            
             app.UseAuthentication();
             app.UseAuthorization();
 
