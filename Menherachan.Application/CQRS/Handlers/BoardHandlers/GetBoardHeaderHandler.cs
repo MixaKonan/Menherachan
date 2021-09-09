@@ -22,18 +22,6 @@ namespace Menherachan.Application.CQRS.Handlers.BoardHandlers
         
         public async Task<Response<BoardHeaderViewModel>> Handle(GetBoardHeaderQuery request, CancellationToken cancellationToken)
         {
-            if (request.IsMainPage)
-            {
-                var result = new BoardHeaderViewModel(
-                    "bash",
-                    "org",
-                    "Menherachan",
-                    "Добро пожаловать",
-                    "На сосач");
-
-                return new Response<BoardHeaderViewModel>(result);
-            }
-            
             var board = await _boardRepository.GetBoardAsync(request.Prefix);
 
             if (IsBad(board))

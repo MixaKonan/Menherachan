@@ -2,7 +2,6 @@ using System;
 using System.Threading.Tasks;
 using MediatR;
 using Menherachan.Application.CQRS.Commands.Authentication;
-using Menherachan.WebAPI.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

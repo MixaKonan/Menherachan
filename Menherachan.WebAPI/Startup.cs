@@ -3,15 +3,12 @@ using System.Reflection;
 using System.Text;
 using MediatR;
 using Menherachan.Application;
-using Menherachan.Application.Interfaces;
 using Menherachan.Application.Interfaces.Repositories;
 using Menherachan.Application.Interfaces.Services;
 using Menherachan.Domain.Database;
 using Menherachan.Infrastructure.Persistence.Repositories;
 using Menherachan.Infrastructure.Shared.Mapping;
 using Menherachan.Infrastructure.Shared.Services;
-using Menherachan.WebAPI.Cookies;
-using Menherachan.WebAPI.Middleware;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.CookiePolicy;
@@ -101,7 +98,6 @@ namespace Menherachan.WebAPI
             
             services.AddTransient<ITokenService, TokenService>();
             services.AddTransient<IAdminService, AdminService>();
-            services.AddTransient<ICookieService, CookieService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

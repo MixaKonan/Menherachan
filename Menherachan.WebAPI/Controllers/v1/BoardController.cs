@@ -40,7 +40,6 @@ namespace Menherachan.WebAPI.Controllers.v1
             return Ok(result);
         }
 
-        [Authorize]
         [HttpGet("preview")]
         public async Task<IActionResult> GetPreview([FromQuery] GetThreadsPreviewsQuery query)
         {
