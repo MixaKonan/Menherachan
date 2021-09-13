@@ -3,6 +3,7 @@ using AutoMapper;
 using Menherachan.Domain.Entities.DBOs;
 using Menherachan.Domain.Entities.Responses;
 using Menherachan.Domain.Entities.ViewModels.Common;
+using Menherachan.Domain.Entities.ViewModels.Thread;
 
 namespace Menherachan.Infrastructure.Shared.Mapping
 {
@@ -27,6 +28,10 @@ namespace Menherachan.Infrastructure.Shared.Mapping
                 .ForMember(rt => rt.CreatedAt, t => t.MapFrom(token => token.CreatedAt))
                 .ForMember(rt => rt.ExpiresAt, t => t.MapFrom(token => token.ExpiresAt))
                 .ReverseMap();
+
+            CreateMap<Thread, ThreadViewModel>()
+                .ForMember(tvm => tvm.Posts, t => t.MapFrom(thread => thread.Post))
+                .ForMember(tvm => tvm.ThreadId, t => t.MapFrom(thread => thread.ThreadId));
         }
     }
 }

@@ -15,13 +15,13 @@ namespace Menherachan.Application.CQRS.Handlers.BoardHandlers
 {
     public class GetThreadsPreviewHandler : IRequestHandler<GetThreadsPreviewsQuery, Response<IEnumerable<PostViewModel>>>
     {
-        private IThreadRepository _threadRepository;
-        private IMapper _mapper;
+        private readonly IThreadRepository _threadRepository;
+        private readonly IMapper _mapper;
 
-        public GetThreadsPreviewHandler(IThreadRepository threadRepository, IMapper mapper)
+        public GetThreadsPreviewHandler(IMapper mapper, IThreadRepository threadRepository)
         {
-            _threadRepository = threadRepository;
             _mapper = mapper;
+            _threadRepository = threadRepository;
         }
 
         public async Task<Response<IEnumerable<PostViewModel>>> Handle(GetThreadsPreviewsQuery request, CancellationToken cancellationToken)

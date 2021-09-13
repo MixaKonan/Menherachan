@@ -120,5 +120,22 @@ namespace Menherachan.Infrastructure.Persistence.Repositories
                 .AsNoTracking()
                 .ToListAsync();
         }
+        public async Task<Thread> GetThreadWithPosts(int threadId)
+        {
+            return await _threads
+                .Include(t => t.Post)
+                .Include(t => t.File)
+                .FirstAsync(t => t.ThreadId == threadId);
+        }
+
+        public async Task<Thread> GetThreadWithPagedPosts(int threadId, int page, int pageSize)
+        {
+            return await _threads
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .Include(t => t.Post)
+                .Include(t => t.File)
+                .FirstAsync(t => t.ThreadId == threadId);
+        }
     }
 }
