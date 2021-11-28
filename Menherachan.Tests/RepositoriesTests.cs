@@ -162,14 +162,13 @@ namespace Menherachan.Tests
 
             //Act
             await _adminRepository.AddAsync(expectedAdmin);
-            var admins = await _adminRepository.GetDataAsync();
             var actualResponse = await _adminService.AuthenticateAsync(username, password);
             var token = await _tokenRepository.GetToken(expectedRefreshToken.Token);
             
             //Assert
-            actualResponse.Item1.Email.Should().Be(username);
-            actualResponse.Item1.Nickname.Should().Be(login);
-            actualResponse.Item1.Bearer.Should().Be(expectedJwtToken);
+            actualResponse.Item1.Email.Should().Be(expectedAuthenticationResponse.Email);
+            actualResponse.Item1.Nickname.Should().Be(expectedAuthenticationResponse.Nickname);
+            actualResponse.Item1.Bearer.Should().Be(expectedAuthenticationResponse.Bearer);
 
             actualResponse.Item2.Token.Should().Be(expectedRefreshToken.Token);
 
