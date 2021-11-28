@@ -74,6 +74,7 @@ namespace Menherachan.WebAPI.Controllers
                 HttpOnly = true,
                 Expires = DateTime.UtcNow.AddDays(7)
             };
+            
             Response.Cookies.Append(_configuration["Jwt:TokenCookieName"], token, cookieOptions);
         }
     }

@@ -1,3 +1,9 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
 	<s:String x:Key="/Default/CodeInspection/PencilsConfiguration/ActualSeverity/@EntryValue">WARNING</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=da96d779_002D554e_002D49eb_002D8cb2_002D514915132a30/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="GetDataAsync_Returns_Empty_List" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;xUnit::0B9E8BC0-61A2-4749-B138-37C47282771C::net5.0::Menherachan.Tests.AdminRepositoryTests&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::0B9E8BC0-61A2-4749-B138-37C47282771C::net5.0::Menherachan.Tests.AdminServiceTests.AuthenticateAsync_Authenticates_OnValidCredits&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=Menherachan/@EntryIndexedValue">True</s:Boolean></wpf:ResourceDictionary>

@@ -16,6 +16,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Menherachan.Infrastructure.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Menherachan.Infrastructure.Shared", "Menherachan.Infrastructure.Shared\Menherachan.Infrastructure.Shared.csproj", "{50DED253-2230-4B18-B70A-24BD9584CD5C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{6736E724-DB98-4D31-B8E3-E5635D7EFF2F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Menherachan.Tests", "Menherachan.Tests\Menherachan.Tests.csproj", "{0B9E8BC0-61A2-4749-B138-37C47282771C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,6 +46,10 @@ Global
 		{50DED253-2230-4B18-B70A-24BD9584CD5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{50DED253-2230-4B18-B70A-24BD9584CD5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{50DED253-2230-4B18-B70A-24BD9584CD5C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B9E8BC0-61A2-4749-B138-37C47282771C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B9E8BC0-61A2-4749-B138-37C47282771C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B9E8BC0-61A2-4749-B138-37C47282771C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B9E8BC0-61A2-4749-B138-37C47282771C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{7721C692-9C90-4FFD-A33F-ECBC7C7640AA} = {A9768F99-C24D-4E19-9CE7-A545D02FB255}
@@ -49,5 +57,6 @@ Global
 		{C0E89601-87FF-420D-A674-0A50E076707D} = {6528ED9D-CE28-46AC-B223-55C09DBC8E26}
 		{07AEF8F4-3BAC-4C18-8CE6-0C900B34C3E9} = {10E0F25D-F35A-44E1-ADFB-C4EE151DC2FC}
 		{50DED253-2230-4B18-B70A-24BD9584CD5C} = {10E0F25D-F35A-44E1-ADFB-C4EE151DC2FC}
+		{0B9E8BC0-61A2-4749-B138-37C47282771C} = {6736E724-DB98-4D31-B8E3-E5635D7EFF2F}
 	EndGlobalSection
 EndGlobal
